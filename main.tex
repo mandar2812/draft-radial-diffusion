@@ -6,7 +6,7 @@
 %
 % to avoid loading the natbib package, add option nonatbib:
 % \usepackage[nonatbib]{nips_2017}
-
+\PassOptionsToPackage{numbers, compress}{natbib}
 \usepackage{nips_2017}
 
 % to compile a camera-ready version, add the [final] option, e.g.:
@@ -20,6 +20,7 @@
 \usepackage{amsfonts}       % blackboard math symbols
 \usepackage{nicefrac}       % compact symbols for 1/2, etc.
 \usepackage{microtype}      % microtypography
+\bibliographystyle{unsrtnat}
 
 \title{Bayesian Inference of Plasma Diffusion Parameters: An LSSVM based approach}
 
@@ -82,10 +83,72 @@
 
 \section{Methodology}
 
+Bayesian inference involves specifying the following components.
+\begin{enumerate}
+\item Prior distribution over system parameters.
+\item Quantification of likelihood over observations.
+\item Procedure for performing inference, i.e. exact inference, \emph{Markov Chain
+    Monte Carlo}, \emph{Variational methods}, etc.
+\end{enumerate}
+
+Performing Bayesian inference over parameters of physical systems,
+involves synthesizing pre-exsiting knowledge of the physical system in
+question i.e. the \emph{partial differential equation} (PDE), with
+statistical techniques. The aim of such an exercise is often the
+quantification of uncertainty over system parameters from an often
+sparse set of observations which are quantities of interest in the
+physical system. 
+
+
 \subsection{Physical System: Plasma Diffusion}
 
-\subsubsection*{Key Diffusion Parameters}
+The radial diffusion system is a simplified one-dimensional version of
+the \emph{Fokker-Plank} equation. It tracks the time evolution of the
+\emph{phase space density} of particles, $f$ which is goverened by the
+differential equation \ref{eq:raddiffusion} known as \emph{radial
+  diffusion} \citep{JGRA:JGRA9345}.
 
+\begin{equation}\label{eq:raddiffusion}
+  \frac{\partial{f}}{\partial{t}} = l^2 \frac{\partial}{\partial{l}}\left( \frac{\kappa(l,
+      t)}{l^{2}} \frac{\partial{f}}{\partial{l}} \right) - \lambda(l,
+  t) f +  Q(l, t)
+\end{equation}
+
+The \emph{phase space density}, $f$, is a function of the spatial
+coordinate $l$ which is also known as the \emph{Roederer} $L^*$ or
+\emph{L-shell} in magnetospheric physics \citep{Roederer1970}.
+
+The key quantities in the system above are as follows.
+
+\begin{enumerate}
+\item $f$: The density of particles as a function of space $l$ and
+  time $t$.
+\item $\kappa(l, t)$: Diffusion field.
+\item $\lambda(l, t)$: Loss rate, this is a non-negative
+  quantitiy which indicates how quickly particles are lost from the
+  radiation belts.
+\item $Q(l, t)$: Particle injection rate.
+\end{enumerate}
+
+
+
+\subsubsection*{Diffusion Parameters}
+
+To solve the radial diffusion system \ref{eq:raddiffusion}, the
+quantities $\kappa(l, t)$, $\lambda(l, t)$ and $Q(l, t)$ need to be
+specified. It is a common practice (see \citet{GRL:GRL10762},
+\citet{JGRA:JGRA15067}, \citet{JGRA:JGRA18021} and
+\citet{GRL:GRL22815}) to parameterise the diffusion field
+$\kappa$ and loss rate $\lambda$ in the following manner.
+
+\begin{equation}
+  \kappa(l,t), \lambda(l, t) \sim \alpha l^{\beta} 10^{b Kp(t)}
+\end{equation}
+
+The quantities $\alpha$, $\beta$ and $b$ are parameters which define
+the diffusion field and loss rate while the quantity $Kp(t)$ is known
+as the Kp index, a measured quantity which stands as a proxy for the
+global geomagnetic activity \cite{BartelsKp}.
 
 \subsection{Model Formulation}
 
@@ -116,18 +179,5 @@ size to \verb+small+ (9 point) when listing the references. {\bf
 
 \small
 
-[1] Alexander, J.A.\ \& Mozer, M.C.\ (1995) Template-based algorithms
-for connectionist rule extraction. In G.\ Tesauro, D.S.\ Touretzky and
-T.K.\ Leen (eds.), {\it Advances in Neural Information Processing
-  Systems 7}, pp.\ 609--616. Cambridge, MA: MIT Press.
-
-[2] Bower, J.M.\ \& Beeman, D.\ (1995) {\it The Book of GENESIS:
-  Exploring Realistic Neural Models with the GEneral NEural SImulation
-  System.}  New York: TELOS/Springer--Verlag.
-
-[3] Hasselmo, M.E., Schnell, E.\ \& Barkai, E.\ (1995) Dynamics of
-learning and recall at excitatory recurrent synapses and cholinergic
-modulation in rat hippocampal region CA3. {\it Journal of
-  Neuroscience} {\bf 15}(7):5249-5262.
-
+\bibliography{references}
 \end{document}
