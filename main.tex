@@ -152,8 +152,28 @@ global geomagnetic activity \cite{BartelsKp}.
 
 \subsection{Model Formulation}
 
+We approach the radial diffusion inference problem by formulating a
+modified version of the \emph{least squares support vector machine}
+predictor for obtaining a closed form approximation to the phase space
+density $f$ which tries to satisfy the radial diffusion PDE
+\ref{eq:raddiffusion} on a fixed set of \emph{colocation} points while
+minimising error on a set of sparse noisy observations.
 
-\subsubsection*{Approximate Forward Model}
+Using the surrogate phase space density estimator as a baseline, we
+specify the likelihood of the observations.
+
+\emph{Least Squares Support Vector Machines}(LSSVM) have been applied
+to calculating approximate solutions to PDEs
+\citep{MEHRKANOON2015105}, \citep{MEHRKANOON20122502} as well as
+parameter estimation of delay differential equations
+\citep{MEHRKANOON2014830}, the approach taken in the aforementioned
+research (\citet{MEHRKANOON2014830}) was expressing the parameter
+estimation of time delay as an algebraic optimization problem
+resulting in closed-form approximation for the time varying parameters
+while avoiding iterative simulation of the dynamical system (governed
+by the delay differential equations) in the parameter estimation process.
+
+\subsubsection*{Surrogate Phase Space Density Model}
 
 \subsubsection*{Quantifying Observation Likelihood}
 
