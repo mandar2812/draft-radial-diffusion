@@ -411,7 +411,11 @@ the final observation set $\mathcal{D}$ which is fed to the surrogate model $\ha
 \subsection*{Results}
 
 The posterior samples generated for parameters $\alpha$, $\beta$ and $b$ are shown
-in figures \ref{fig:alpha}, \ref{fig:beta} and \ref{fig:b} respectively.
+in figures \ref{fig:alpha}, \ref{fig:beta} and \ref{fig:b} respectively. We see that
+the marginal posterior distributions of each parameter have high probability 
+density near the ground truth, and that they are heavy tailed in the case of $\alpha$, 
+this is because there are often large regions of the parameter space which produce similar
+solutions for the phase space density $f$. 
 
 \begin{table}[t]
   \caption{Parameters: Prior}
