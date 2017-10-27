@@ -22,6 +22,8 @@
 \usepackage{nicefrac}       % compact symbols for 1/2, etc.
 \usepackage{microtype}      % microtypography
 \usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
 \bibliographystyle{unsrtnat}
 
 \title{Bayesian Inference of Plasma Diffusion Parameters: An LSSVM based approach}
@@ -37,29 +39,26 @@
 % author name.
 
 \author{
-  Mandar H.~Chandorkar\thanks{Use footnote for providing further
-    information about author (webpage, alternative
-    address)---\emph{not} for acknowledging funding agencies.} \\
+  Mandar H.~Chandorkar\thanks{mandar2812.github.io} \\
   Multiscale Dynamics\\
   Centrum Wiskunde Informatica\\
   Amsterdam 1098XG, the Netherlands\\
   \texttt{mandar.chandorkar@cwi.nl} \\
   %% examples of more authors
-  %% \And
-  %% Coauthor \\
-  %% Affiliation \\
-  %% Address \\
-  %% \texttt{email} \\
-  %% \AND
-  %% Coauthor \\
-  %% Affiliation \\
-  %% Address \\
-  %% \texttt{email} \\
-  %% \And
-  %% Coauthor \\
-  %% Affiliation \\
-  %% Address \\
-  %% \texttt{email} \\
+   \And
+   Enrico ~Camporeale \\
+   Multiscale Dynamics \\
+   Centrum Wiskunde Informatica \\
+   \texttt{e.camporeale@cwi.nl} \\
+   \AND
+   Cyril \\
+   Furthlener \\
+   INRIA, Paris-Saclay \\
+   \texttt{furthlen@inria.fr} \\
+   \And
+   Michele Sebag \\
+   INRIA, Paris-Saclay \\
+   \texttt{sebag@inria.fr} \\
   %% \And
   %% Coauthor \\
   %% Affiliation \\
@@ -336,14 +335,12 @@ C(x_{n_o}, x_{n_{1}}) & \cdots  & C(x_{n_o}, x_{n_{o}})
 \end{bmatrix} \right )
 \end{equation}
 
-
 The values of $s$ and $r$, the length scales of the covariance function, 
 can be fixed to the size of the space-time grid of the radial basis functions, 
 alternatively they can also be treated as system parameters which can be sampled 
 by the inference procedure. Since the core aims of this research was the quantification
 of the uncertainty over the parameters of the radial diffusion system, 
 we treat the covariance function parameters as fixed.
-
 
 \subsection{Inference}
 
@@ -352,13 +349,48 @@ system parameters. The adaptive Metropolis algorithm adapts the exploration vari
 to the running sample statistics of the Markov Chain procedure.
 
 
-\section{Results}
+\section{Experiment}
 
+For the purposes of the experiment, the parameters of $\kappa$ and $Q$ are kept fixed while MCMC inference 
+is performed on the parameters of $\lambda$. The prior distributions chosen for the parameters 
+are shown in table \ref{tab:prior}. The posterior distribution over the parameters of $\lambda$ is 
+sampled via adaptive Metropolis, the first 1500 samples are kept aside as the \emph{burn in} period
+of the Markov Chain.
 
+\subsection*{Data Generation}
 
-\begin{equation}
+The technique presented is applied on synthetic data generated using a radial diffusion solver, 
+the ground truth values of the radial diffusion parameters are listed in table \ref{tab:ground-truth}.
+
+A slightly modified parameterization is adopted for the particle injection $Q$ as shown in equation \ref{eq:q}
+below. The particle injection has a strictly time varying component due to presence of a constant $\gamma$.
+
+\begin{equation}\label{eq:q}
 Q(l,t)  \sim (\alpha l^{\beta} + \gamma) 10^{b Kp(t)}
 \end{equation}
+
+The initial phase space density $f(t = 0)$ and the time trajectory 
+of the Kp index are assumed to be set as follows.
+
+\begin{align}
+f(t = 0) &= 100(1 + I_1(l)) \\
+Kp(t) &= \left\{\begin{matrix}
+2.5 + 4t & 0 \leq t < 1.5\\ 
+8.5 & 1.5 < t \leq 3\\ 
+17.5-3t & 3 <  t \leq 5 \\ 
+2.5 & 5 < t\\ 
+\end{matrix}\right.
+\end{align}
+
+Where $I_1$ is the modified Bessel function of the first kind with parameter 1. 
+The evolution of the Kp index is assumed such that it mimics a geomagnetic storm event. 
+The radial diffusion solver is run for domain limits $l \in [1, 7], t \in [0, 5]$ with
+200 bins in the spatial and 50 bins in the temporal domains respectively.
+
+After the approximate solution profiles of $f$ are generated, the points are sub-sampled
+uniformly such that 50 points in the bulk and 20 points at the initial time step (t = 0)
+are selected. These observations are then perturbed slightly by Gaussian noise to yield
+the final observation set $\mathcal{D}$ which is fed to the surrogate model $\hat{f}(x)$.
 
 \begin{table}[t]
   \caption{Parameters: Ground Truth}
@@ -370,30 +402,56 @@ Q(l,t)  \sim (\alpha l^{\beta} + \gamma) 10^{b Kp(t)}
     Quantity     & $\alpha$     & $\beta$ & $\gamma$ & $b$ \\
     \midrule
     $Q$ & $1$  & $0.5$ & $0.05$  & $0.45$     \\
-    $\kappa$  & $4.731 \times 10^{-10}$ & $10$  & $0$ & $0.506$     \\
+    $\kappa$  & $4.731 \times 10^{-10}$ & $10$  & $0$ & $0.506$ \\
     $\lambda$ & $0.3678$ & $0.5$  & $0$ & $-0.2$ \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-\begin{figure}[h]
+\subsection*{Results}
+
+The posterior samples generated for parameters $\alpha$, $\beta$ and $b$ are shown
+in figures \ref{fig:alpha}, \ref{fig:beta} and \ref{fig:b} respectively.
+
+\begin{table}[t]
+  \caption{Parameters: Prior}
+  \label{tab:prior}
   \centering
-  \includegraphics[width=0.45\textwidth]{histogram_alpha_posterior}
+  \begin{tabular}{llll}
+    \toprule
+    \cmidrule{1-2}
+    Quantity     & $\alpha$     & $\beta$ & $b$ \\
+    \midrule
+    $\lambda$ & $Lognormal(0, 1)$ & $Gamma(1, 1)$ & $\mathcal{N}(0, 2)$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+
+\begin{figure}[h] 
+  \label{fig:alpha}
+  \centering
+  \includegraphics[width=0.4\textwidth]{histogram_alpha_posterior}
   \caption{Posterior Samples $\alpha$}
 \end{figure}
 
 \begin{figure}[h]
+  \label{fig:beta}
   \centering
-  \includegraphics[width=0.45\textwidth]{histogram_beta_posterior}
+  \includegraphics[width=0.4\textwidth]{histogram_beta_posterior}
   \caption{Posterior Samples $\beta$}
 \end{figure}
 
+\begin{figure}[h]
+  \label{fig:b}
+  \centering
+  \includegraphics[width=0.4\textwidth]{histogram_b_posterior}
+  \caption{Posterior Samples $b$}
+\end{figure}
 
 \subsubsection*{Acknowledgments}
 
-Use unnumbered third level headings for the acknowledgments. All
-acknowledgments go at the end of the paper. Do not include
-acknowledgments in the anonymized submission, only in the final paper.
+The authors would like to acknowledge travel grant.
 
 \medskip
 
