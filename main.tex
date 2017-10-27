@@ -130,7 +130,7 @@ The \emph{phase space density}, $f$, is a function of the spatial
 coordinate $l$ which is also known as the \emph{Roederer} $L^*$ or
 \emph{L-shell} in magnetospheric physics \citep{Roederer1970}.
 
-The key quantities in the system above are as follows.
+The key quantities in the system above are.
 
 \begin{enumerate}
 \item $f$: The density of particles as a function of space $l$ and
@@ -175,8 +175,7 @@ modified version of the \emph{least squares support vector machine}
 predictor for obtaining a closed form approximation to the phase space
 density $f$ which tries to satisfy the radial diffusion PDE
 \ref{eq:raddiffusion} on a fixed set of \emph{colocation} points while
-minimising error on a set of sparse noisy observations.
-
+minimising error on a set of sparse noisy observations. 
 Using the surrogate phase space density estimator as a baseline, we
 specify the likelihood of the observations.
 
@@ -278,6 +277,33 @@ The components of the symmetric block matrix system on the left hand side of
 The surrogate model can now be used to estimate the phase space density 
 at a point $x = (l,t)$ as $\hat{f}(x;\theta) = \sum_{k = 1}^{n_{o}}{\alpha_{k}\varphi(x)^{T}\varphi(x^{o}_{k}) + \sum_{k = 1}^{n_{c}}}{\beta_{k} \varphi(x)^{T} \psi_{\theta}(x^{c}_{k})} + b$
 
+\subsection*{Choice of Basis}
+
+There exist several choices regarding the basis $\varphi(.)$, they are but not limited to 
+orthogonal polynomials, Fourier series, radial basis functions etc. 
+
+Radial basis functions were first applied for solution of PDE problems in \cite{KANSA1990147}, 
+the authors used colocation with \emph{multiquadric} basis functions for approximating solutions
+of boundary value problems.
+
+Radial basis functions have been applied for the mesh-free solutions of Poisson PDE systems 
+(\citep{AMINATAEI20082887}, \citep{DUAN200866}, \citep{DUAN2006394} \& \citep{CNM:CNM419}),
+as well as the Poisson control problem \citet{Pearson2013}. Further applications of RBFs include 
+atmospheric flow \citep{Tillenius2015406}, convection-diffusion \citep{Safdari-Vaighani2015}, and 
+Schrödinger's equation (\citep{doi:10.1137/120893975}, \citep{doi:10.1063/1.3637863}). 
+
+For our problem we choose a basis which is a product of a multiquadric radial basis in space and 
+an inverse multiquadric basis in time.
+
+\begin{equation}\label{eq:basis}
+\varphi_{i}(l,t) = \frac{\sqrt{1+(|l - l_{i}|/\rho_{l})^{2}}}{(1+(|t - t_{i}|/\rho_{t})^{2})^{s/2}}
+\end{equation}
+
+The nodes of the basis are placed on a regular rectangular grid and their 
+length scales $\rho_l$ and $\rho_t$ are set to the distance between adjacent
+node points. The value of the exponent $s$ in equation \ref{eq:basis} should be
+a positive value between $0$ and $1$, we observe that setting $s = 0.75$ works well
+in practice.
 
 \subsubsection*{Quantifying Observation Likelihood}
 
