@@ -143,7 +143,7 @@ The key quantities in the system above are as follows.
 \end{enumerate}
 
 Casting system \ref{eq:raddiffusion} in terms of the terminology of
-section \ref{sec:inv}, it can be seen that $\mathcal{L}_{\theta} =
+section \ref{sec:inv}, $\mathcal{L}_{\theta} =
 \frac{\partial}{\partial{t}} - l^2 \frac{\partial}{\partial{l}}\left( \frac{\kappa(l,
       t)}{l^{2}} \frac{\partial}{\partial{l}} \right) - \lambda(l,
   t)$. In this case $\theta$ would a collection of parameters which
@@ -193,32 +193,31 @@ by the delay differential equations) in the parameter estimation process.
 
 \subsubsection*{Surrogate Phase Space Density Model}
 
-Let $\mathcal{D}={(x_{i}, y_{i}): i = 1 \cdots n_{o}}$ be a set of
+Let $\mathcal{D}={(x^{o}_{i}, y_{i}): i = 1 \cdots n_{o}}$ be a set of
 noisy observations of the phase space density $f$, where $x_{i} =
 (l_{i}, t_{i})$ are points in the space time domain. We seek a linear
 estimator for $f$ of the form $\hat{f}(x) = w^{T}\varphi(x) + b$,
 where $\varphi(.): \mathbb{R}^{2} \rightarrow \mathbb{R}^{d}$ is a $d$
 dimensional feature map and $b$ is a scalar intercept.
 
+Further let $\mathcal{C} ={(x^{o}_{i}, y_{i}): i = 1 \cdots n_{o}}$ be 
+a set of colocation points on which we aim to enforce radial diffusion
+dynamics.
+
 We exploit the linearity of the differential operator
 $\mathcal{L}_{\theta}$ and note that $\mathcal{L}_{\theta} [\hat{f}(x)]
 = w^{T} \mathcal{L}_{\theta}[\varphi(x)]$, yielding an estimator
 $\hat{Q}(x) = w^{T}\psi(x)$ where $\psi_{\theta}(x) =
 \mathcal{L}_{\theta}[\varphi(x)]$. Calculating $w \in \mathbb{R}^d$
-can now be cast as the following constrained $L_2$ regularized least squares problem.
+can now be cast as the following constrained $L_2$ regularized 
+least squares problem.
 
 \begin{align}\label{eq:surrogate}
-   min_{w,e,\epsilon} \ \mathcal{J}(w,e,\epsilon;\theta) &= \frac{1}{2}
-                                                    w^{T}w +
-                                                    \frac{1}{2\gamma_{o}}
-                                                    \sum_{k =
-                                                    1}^{n_{o}}{e^{2}_{k}}
-                                                    +
-                                                    \frac{1}{2\gamma_{c}}
-                                                    \sum_{k = 1}^{n_{c}}{\epsilon^{2}_{k}} \\
-                                                & s.t \\
-  y_{i} & = w^{T}\varphi(x_{i}) + b + e_{i}, \ \ i = 1 \cdots n_{o} \\
-  q_{i} & = w^{T}\psi_{\theta}(x_{i}) + \epsilon_{i}, \ \ i = 1 \cdots n_{c}
+   min_{w,e,\epsilon} \ \mathcal{J}(w,e,\epsilon;\theta) &= 
+   \frac{1}{2} w^{T}w + \frac{1}{2\gamma_{o}} \sum_{k = 1}^{n_{o}}{e^{2}_{k}} + \frac{1}{2\gamma_{c}} \sum_{k = 1}^{n_{c}}{\epsilon^{2}_{k}} \\
+  & s.t \nonumber \\
+  y_{i} & = w^{T}\varphi(x^{o}_{i}) + b + e_{i}, \ \ i = 1 \cdots n_{o} \\
+  q_{i} & = w^{T}\psi_{\theta}(x^{c}_{i}) + \epsilon_{i}, \ \ i = 1 \cdots n_{c}
 \end{align}
 
 It can be seen that system \ref{eq:surrogate} is similar to the
@@ -235,33 +234,49 @@ In order to solve this system one must construct its
 \emph{Lagrangian}.
 
 \begin{align*}\label{eq:lag}
-      \mathfrak{L}(w,e,\epsilon, \alpha_{1 \cdots k}, \beta_{1 \cdots
-    k};\theta; \gamma_{o}; \gamma_{c}) &= \frac{1}{2}
-                                                    w^{T}w +
-                                                    \frac{1}{2\gamma_{o}}
-                                                    \sum_{k =
-                                                    1}^{n_{o}}{e^{2}_{k}}
-                                                    +
-                                                    \frac{1}{2\gamma_{c}}
-                                                    \sum_{k =
-                                                      1}^{n_{c}}{\epsilon^{2}_{k}} \\
-                                                   & + \sum_{k =
-                                                      1}^{n_{o}}{\alpha_{k}(y_{k}
-                                                      -
-                                                      w^{T}\varphi(x_{k})
-                                                      + b + e_{k})} \\
-                                                   & + \sum_{k =
-                                                      1}^{n_{c}}{\beta_{k}(q_{j}-
-                                                     w^{T}\psi_{\theta}(x_{j}) + \epsilon_{j})} 
+      \mathfrak{L}(w,e,\epsilon, \alpha_{1 \cdots k}, \beta_{1 \cdots k}; \theta; \gamma_{o}; \gamma_{c}) &= 
+      \frac{1}{2} w^{T}w + \frac{1}{2\gamma_{o}} \sum_{k = 1}^{n_{o}}{e^{2}_{k}} +
+      \frac{1}{2\gamma_{c}} \sum_{k = 1}^{n_{c}}{\epsilon^{2}_{k}} \\
+      & + \sum_{k = 1}^{n_{o}}{\alpha_{k}(y_{k} - w^{T}\varphi(x^{o}_{k}) + b + e_{k})} \\
+      & + \sum_{k = 1}^{n_{c}}{\beta_{k}(q_{j} - w^{T}\psi_{\theta}(x^{c}_{j}) + \epsilon_{j})} 
 \end{align*}
 
 Given fixed values for $\gamma_{o}$, $\gamma_{c}$ and PDE parameters
 $\theta$, the equation above expresses the Lagrangian of system
-\ref{eq:surrogate}. The quantities $\alpha_{1 \cdots n_o}$ and
-$\beta_{1 \cdots n_c}$ are the \emph{Lagrange multipliers}
+\ref{eq:surrogate}. The quantities $\alpha_{1}, \cdots, \alpha_{n_{o}}$ and
+$\beta_{1}, \cdots, \beta_{n_{c}}$ are the \emph{Lagrange multipliers}
 introduced for equality constraints of the system. Applying the
-\emph{Karush-Kuhn-Tucker}(KKT) conditions the solution can be computed
-in the so called \emph{dual space}.
+\emph{Karush-Kuhn-Tucker}(KKT) conditions the solution of the
+optimization problem \ref{eq:surrogate} can be expressed in terms of
+the Lagrange multipliers $\alpha = (\alpha_{1}, \cdots, \alpha_{n_{o}})$
+$\beta = (\beta_{1}, \cdots, \beta_{n_{c}})$.
+
+\begin{equation}\label{eq:solution}
+  \begin{bmatrix}
+    0 & \mathbf{1}^{T} & \mathbf{0} \\ 
+    \mathbf{1} & \Omega + \gamma_{o}I  & \Omega_*\\ 
+    \mathbf{0} & \Omega_{*}^{T}  & \Omega_{**} + \gamma_{c}I 
+  \end{bmatrix} \begin{bmatrix}
+    b\\ 
+    \alpha\\ 
+    \beta
+  \end{bmatrix} = \begin{bmatrix}
+    0\\ 
+    y\\ 
+    q
+  \end{bmatrix}
+\end{equation}
+
+The components of the symmetric block matrix system on the left hand side of 
+\ref{eq:solution} are 
+\begin{enumerate}
+\item $\Omega \in \mathbb{R}^{n_{o} \times n_{o}}: \omega_{ij} = \varphi(x^{o}_{i})^{T} \varphi(x^{o}_{j})$
+\item $\Omega_{**} \in \mathbb{R}^{n_{c} \times n_{c}}: \omega^{**}_{ij} = \psi(x^{c}_{i})^{T} \psi(x^{c}_{j})$
+\item $\Omega_{*} \in \mathbb{R}^{n_{o} \times n_{c}}: \omega^{*}_{ij} = \varphi(x^{o}_{i})^{T} \psi(x^{c}_{j})$
+\end{enumerate}
+
+The surrogate model can now be used to estimate the phase space density 
+at a point $x = (l,t)$ as $\hat{f}(x;\theta) = \sum_{k = 1}^{n_{o}}{\alpha_{k}\varphi(x)^{T}\varphi(x^{o}_{k}) + \sum_{k = 1}^{n_{c}}}{\beta_{k} \varphi(x)^{T} \psi_{\theta}(x^{c}_{k})} + b$
 
 
 \subsubsection*{Quantifying Observation Likelihood}
