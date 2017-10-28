@@ -320,5 +320,119 @@ volume = "7",
 year = "2001"
 }
 
+@article{Lagaris, 
+author={I. E. Lagaris and A. Likas and D. I. Fotiadis}, 
+journal={IEEE Transactions on Neural Networks}, 
+title={Artificial neural networks for solving ordinary and partial differential equations}, 
+year={1998}, 
+volume={9}, 
+number={5}, 
+pages={987-1000}, 
+keywords={Galerkin method;feedforward neural nets;finite element analysis;initial value problems;partial differential equations;BVP;FEA;FEM;Galerkin finite element method;IVP;artificial neural networks;boundary value problems;coupled ODE;digital signal processors;feedforward neural network;initial value problems;neuroprocessors;partial differential equations;trial solution;Artificial neural networks;Boundary conditions;Boundary value problems;Differential equations;Digital signal processors;Feedforward neural networks;Finite element methods;Moment methods;Neural networks;Partial differential equations}, 
+doi={10.1109/72.712178}, 
+ISSN={1045-9227}, 
+month={Sep},}
+
+@article{Aarts2001,
+author="Aarts, Lucie P.
+and van der Veer, Peter",
+title="Neural Network Method for Solving Partial Differential Equations",
+journal="Neural Processing Letters",
+year="2001",
+month="Dec",
+day="01",
+volume="14",
+number="3",
+pages="261--271",
+abstract="A method is presented to solve partial differential equations (pde's) and its boundary and/or initial conditions by using neural networks. It uses the fact that multiple input, single output, single hidden layer feedforward networks with a linear output layer with no bias are capable of arbitrarily well approximating arbitrary functions and its derivatives, which is proven by a number of authors and well known in literature. Knowledge about the pde and its boundary and/or initial conditions is incorporated into the structures and the training sets of several neural networks. In this way we obtain networks of which some are specifically structured. To find the solution of the pde and its boundary and/or initial conditions we have to train all obtained networks simultaneously. Therefore we use an evolutionary algorithm to train the networks. We demonstrate the working of our method by applying it to two problems.",
+issn="1573-773X",
+doi="10.1023/A:1012784129883",
+url="https://doi.org/10.1023/A:1012784129883"
+}
+
+@article{TSOULOS20092385,
+title = "Solving differential equations with constructed neural networks",
+journal = "Neurocomputing",
+volume = "72",
+number = "10",
+pages = "2385 - 2391",
+year = "2009",
+note = "Lattice Computing and Natural Computing (JCIS 2007) / Neural Networks in Intelligent Systems Designn (ISDA 2007)",
+issn = "0925-2312",
+doi = "https://doi.org/10.1016/j.neucom.2008.12.004",
+url = "http://www.sciencedirect.com/science/article/pii/S0925231208005560",
+author = "Ioannis G. Tsoulos and Dimitris Gavrilis and Euripidis Glavas",
+keywords = "Differential equations, Neural networks, Genetic programming, Grammatical evolution"
+}
+
+@Article{Baymani2011,
+author="Baymani, M.
+and Effati, S.
+and Kerayechian, A.",
+title="A Feed-Forward Neural Network for Solving Stokes Problem",
+journal="Acta Applicandae Mathematicae",
+year="2011",
+month="Jul",
+day="27",
+volume="116",
+number="1",
+pages="55",
+abstract="The current research attempts to offer a novel method for solving the Stokes problem based on the use of feed-forward neural networks. We transform the mixed Stokes problem into three independent Poisson problems which by solving them the solution of the Stokes problem is obtained. The results obtained by this method, has been compared with the existing numerical method and with the exact solution of the problem. It can be observed that the current new approximation has higher accuracy. The number of model parameters required is less than conventional methods. The proposed new method is illustrated by two examples.",
+issn="1572-9036",
+doi="10.1007/s10440-011-9627-5",
+url="https://doi.org/10.1007/s10440-011-9627-5"
+}
+
+@Inbook{Särkkä2011,
+author="S{\"a}rkk{\"a}, Simo",
+editor="Honkela, Timo
+and Duch, W{\l}odzis{\l}aw
+and Girolami, Mark
+and Kaski, Samuel",
+title="Linear Operators and Stochastic Partial Differential Equations in Gaussian Process Regression",
+bookTitle="Artificial Neural Networks and Machine Learning -- ICANN 2011: 21st International Conference on Artificial Neural Networks, Espoo, Finland, June 14-17, 2011, Proceedings, Part II",
+year="2011",
+publisher="Springer Berlin Heidelberg",
+address="Berlin, Heidelberg",
+pages="151--158",
+abstract="In this paper we shall discuss an extension to Gaussian process (GP) regression models, where the measurements are modeled as linear functionals of the underlying GP and the estimation objective is a general linear operator of the process. We shall show how this framework can be used for modeling physical processes involved in measurement of the GP and for encoding physical prior information into regression models in form of stochastic partial differential equations (SPDE). We shall also illustrate the practical applicability of the theory in a simulated application.",
+isbn="978-3-642-21738-8",
+doi="10.1007/978-3-642-21738-8_20",
+url="https://doi.org/10.1007/978-3-642-21738-8_20"
+}
+
+@InProceedings{pmlr-v31-dondelinger13a,
+  title = 	 {ODE parameter inference using adaptive gradient matching with Gaussian processes},
+  author = 	 {Frank Dondelinger and Dirk Husmeier and Simon Rogers and Maurizio Filippone},
+  booktitle = 	 {Proceedings of the Sixteenth International Conference on Artificial Intelligence and Statistics},
+  pages = 	 {216--228},
+  year = 	 {2013},
+  editor = 	 {Carlos M. Carvalho and Pradeep Ravikumar},
+  volume = 	 {31},
+  series = 	 {Proceedings of Machine Learning Research},
+  address = 	 {Scottsdale, Arizona, USA},
+  month = 	 {29 Apr--01 May},
+  publisher = 	 {PMLR},
+  pdf = 	 {http://proceedings.mlr.press/v31/dondelinger13a.pdf},
+  url = 	 {http://proceedings.mlr.press/v31/dondelinger13a.html},
+  abstract = 	 {Parameter inference in mechanistic models based on systems of coupled differential equations is a topical yet computationally challenging problem, due to the need to follow each parameter adaptation with a numerical integration of the differential equations. Techniques based on gradient matching, which aim to minimize the discrepancy between the slope of a data interpolant and the derivatives predicted from the differential equations, offer a computationally appealing shortcut to the inference  problem. The present paper discusses a method based on nonparametric Bayesian statistics with Gaussian processes due to Calderhead et al. (2008), and shows how inference in this model can be substantially improved by consistently sampling from the joint distribution of the ODE parameters and GP hyperparameters. We demonstrate the efficiency of our adaptive gradient matching technique on three benchmark systems, and perform a detailed comparison with the method in Calderhead et al. (2008) and the explicit ODE integration approach, both in terms of parameter inference accuracy and in terms of computational efficiency.}
+}
+
+@Inbook{Skilling1992,
+author="Skilling, John",
+editor="Smith, C. Ray
+and Erickson, Gary J.
+and Neudorfer, Paul O.",
+title="Bayesian Solution of Ordinary Differential Equations",
+bookTitle="Maximum Entropy and Bayesian Methods: Seattle, 1991",
+year="1992",
+publisher="Springer Netherlands",
+address="Dordrecht",
+pages="23--37",
+abstract="In the numerical solution of ordinary differential equations, a function y(x) is to be reconstructed from knowledge of the functional form of its derivative: dy/dx = f (x, y), together with an appropriate boundary condition. The derivative f is evaluated at a sequence of suitably chosen points (xk, yk), from which the form of y({\textbullet}) is estimated. This is an inference problem, which can and perhaps should be treated by Bayesian techniques. As always, the inference appears as a probability distribution prob(y({\textbullet})), from which random samples show the probabilistic reliability of the results. Examples are given.",
+isbn="978-94-017-2219-3",
+doi="10.1007/978-94-017-2219-3_2",
+url="https://doi.org/10.1007/978-94-017-2219-3_2"
+}
 
 

@@ -82,24 +82,6 @@
 
 \section{Introduction}
 
-\section{Methodology}
-
-Bayesian inference involves specifying the following components.
-\begin{enumerate}
-\item Prior distribution over system parameters.
-\item Quantification of likelihood over observations.
-\item Procedure for performing inference, i.e. exact inference, \emph{Markov Chain
-    Monte Carlo}, \emph{Variational methods}, etc.
-\end{enumerate}
-
-Performing Bayesian inference over parameters of physical systems,
-involves synthesizing pre-exsiting knowledge of the physical system in
-question i.e. the \emph{partial differential equation} (PDE), with
-statistical techniques. The aim of such an exercise is often the
-quantification of uncertainty over system parameters from an often
-sparse set of observations which are quantities of interest in the
-physical system. 
-
 \subsection{Inverse Problems}\label{sec:inv}
 
 The \emph{inverse problem} can be stated as follows: given a set of
@@ -168,6 +150,59 @@ the diffusion field and loss rate while the quantity $Kp(t)$ is known
 as the Kp index, a measured quantity which stands as a proxy for the
 global geomagnetic activity \cite{BartelsKp}.
 
+\subsection{Related Work}
+
+\subsubsection*{Meshfree PDE solutions}
+
+\paragraph{Least Squares Support Vector Machines}
+
+(LSSVM) have been applied to calculating approximate solutions to PDEs
+\citep{MEHRKANOON2015105}, \citep{MEHRKANOON20122502} as well as
+parameter estimation of delay differential equations
+\citep{MEHRKANOON2014830}, the approach taken in the aforementioned
+research (\citet{MEHRKANOON2014830}) was expressing the parameter
+estimation of time delay as an algebraic optimization problem
+resulting in closed-form approximation for the time varying parameters
+while avoiding iterative simulation of the dynamical system (governed
+by the delay differential equations) in the parameter estimation process.
+
+\paragraph{Radial Basis Functions}
+
+(RBF) were first applied for solution of PDE problems in \cite{KANSA1990147}, 
+the authors used colocation with \emph{multiquadric} basis functions for approximating solutions
+of boundary value problems.
+
+Radial basis functions have been applied for the mesh-free solutions of Poisson PDE systems 
+(\citep{AMINATAEI20082887}, \citep{DUAN200866}, \citep{DUAN2006394} \& \citep{CNM:CNM419}),
+as well as the Poisson control problem \citet{Pearson2013}. Further applications of RBFs include 
+atmospheric flow \citep{Tillenius2015406}, convection-diffusion \citep{Safdari-Vaighani2015}, and 
+Schrödinger's equation (\citep{doi:10.1137/120893975}, \citep{doi:10.1063/1.3637863}). 
+
+\paragraph{Gaussian Processes}
+
+\citet{Särkkä2011} \citet{pmlr-v31-dondelinger13a}
+
+\paragraph{Neural Networks} were also employed for solutions of boundary value problems in the works such as \citet{Lagaris}, \citet{Aarts2001} \&  \citet{TSOULOS20092385}. \citet{Baymani2011} used Feedforward networks for calculating solutions to the Stokes problem. These approaches generally revolved around decomposing the solution into two components, i.e. the first one satisfying the boundary conditions and the second one represented by the feedforward network.
+
+\section{Methodology}
+
+Bayesian inference involves specifying the following components.
+\begin{enumerate}
+\item Prior distribution over system parameters.
+\item Quantification of likelihood over observations.
+\item Procedure for performing inference, i.e. exact inference, \emph{Markov Chain
+    Monte Carlo}, \emph{Variational methods}, etc.
+\end{enumerate}
+
+Performing Bayesian inference over parameters of physical systems,
+involves synthesizing pre-exsiting knowledge of the physical system in
+question i.e. the \emph{partial differential equation} (PDE), with
+statistical techniques. The aim of such an exercise is often the
+quantification of uncertainty over system parameters from an often
+sparse set of observations which are quantities of interest in the
+physical system. 
+
+
 \subsection{Model Formulation}
 
 We approach the radial diffusion inference problem by formulating a
@@ -179,16 +214,6 @@ minimising error on a set of sparse noisy observations.
 Using the surrogate phase space density estimator as a baseline, we
 specify the likelihood of the observations.
 
-\emph{Least Squares Support Vector Machines}(LSSVM) have been applied
-to calculating approximate solutions to PDEs
-\citep{MEHRKANOON2015105}, \citep{MEHRKANOON20122502} as well as
-parameter estimation of delay differential equations
-\citep{MEHRKANOON2014830}, the approach taken in the aforementioned
-research (\citet{MEHRKANOON2014830}) was expressing the parameter
-estimation of time delay as an algebraic optimization problem
-resulting in closed-form approximation for the time varying parameters
-while avoiding iterative simulation of the dynamical system (governed
-by the delay differential equations) in the parameter estimation process.
 
 \subsubsection*{Surrogate Phase Space Density Model}
 
@@ -285,16 +310,6 @@ at a point $x = (l,t)$.
 
 There exist several choices regarding the basis $\varphi(.)$, they are but not limited to 
 orthogonal polynomials, Fourier series, radial basis functions etc. 
-
-Radial basis functions were first applied for solution of PDE problems in \cite{KANSA1990147}, 
-the authors used colocation with \emph{multiquadric} basis functions for approximating solutions
-of boundary value problems.
-
-Radial basis functions have been applied for the mesh-free solutions of Poisson PDE systems 
-(\citep{AMINATAEI20082887}, \citep{DUAN200866}, \citep{DUAN2006394} \& \citep{CNM:CNM419}),
-as well as the Poisson control problem \citet{Pearson2013}. Further applications of RBFs include 
-atmospheric flow \citep{Tillenius2015406}, convection-diffusion \citep{Safdari-Vaighani2015}, and 
-Schrödinger's equation (\citep{doi:10.1137/120893975}, \citep{doi:10.1063/1.3637863}). 
 
 For our problem we choose a basis which is a product of a multiquadric radial basis in space and 
 an inverse multiquadric basis in time.
