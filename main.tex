@@ -72,27 +72,16 @@
 \maketitle
 
 \begin{abstract}
-  The abstract paragraph should be indented \nicefrac{1}{2}~inch
-  (3~picas) on both the left- and right-hand margins. Use 10~point
-  type, with a vertical spacing (leading) of 11~points.  The word
-  \textbf{Abstract} must be centered, bold, and in point size 12. Two
-  line spaces precede the abstract. The abstract must be limited to
-  one paragraph.
+ We present a method which combines sparse irregular observations with physics based models, 
+ for performing Bayesian inference over plasma diffusion parameters. Our method uses a basis
+ function approach coupled with a least squares support vector machine objective function which
+ weighs differently errors arising due to data fitting and satisfaction of physical constraints.
+ The method incorporates physical models into classical least squares techniques for the purpose
+ of data assimilation and uncertainty quantification of latent parameters.
 \end{abstract}
 
 \section{Introduction}
 
-\subsection{Inverse Problems}\label{sec:inv}
-
-The \emph{inverse problem} can be stated as follows: given a set of
-noisy observations $y$ scattered in the space time domain, of a
-physical quantity $f$ governed by the dynamical system
-$\mathcal{L}_{\theta} f = Q_{\theta}$, estimate the parameters $\theta$ of the
-dynamical system $(\mathcal{L}_{\theta}, Q_{\theta})$.
-
-In this formalism $\mathcal{L}_{\theta}$ is a differential operator,
-$Q_{\theta}$ is a \emph{source term} and $\theta$ is a collection of parameters
-which specify the operator and the source term.
 
 \subsection{Physical System: Plasma Diffusion}
 
@@ -124,14 +113,6 @@ The key quantities in the system above are.
 \item $Q(l, t)$: Particle injection rate.
 \end{enumerate}
 
-Casting system \ref{eq:raddiffusion} in terms of the terminology of
-section \ref{sec:inv}, $\mathcal{L}_{\theta} =
-\frac{\partial}{\partial{t}} - l^2 \frac{\partial}{\partial{l}}\left( \frac{\kappa(l,
-      t)}{l^{2}} \frac{\partial}{\partial{l}} \right) - \lambda(l,
-  t)$. In this case $\theta$ would a collection of parameters which
-  would specify the analytic expressions for $\kappa(l,t)$,
-  $\lambda(l,t)$ and $Q(l,t)$.
-
 \subsubsection*{Diffusion Parameters}
 
 To solve the radial diffusion system \ref{eq:raddiffusion}, the
@@ -149,6 +130,27 @@ The quantities $\alpha$, $\beta$ and $b$ are parameters which define
 the diffusion field and loss rate while the quantity $Kp(t)$ is known
 as the Kp index, a measured quantity which stands as a proxy for the
 global geomagnetic activity \cite{BartelsKp}.
+
+
+\subsection{Inverse Problems}\label{sec:inv}
+
+The \emph{inverse problem} can be stated as follows: given a set of
+noisy observations $y$ scattered in the space time domain, of a
+physical quantity $f$ governed by the dynamical system
+$\mathcal{L}_{\theta} f = Q_{\theta}$, estimate the parameters $\theta$ of the
+dynamical system $(\mathcal{L}_{\theta}, Q_{\theta})$.
+
+In this formalism $\mathcal{L}_{\theta}$ is a differential operator,
+$Q_{\theta}$ is a \emph{source term} and $\theta$ is a collection of parameters
+which specify the operator and the source term.
+
+In the radial diffusion system \ref{eq:raddiffusion}, $\mathcal{L}_{\theta} =
+\frac{\partial}{\partial{t}} - l^2 \frac{\partial}{\partial{l}}\left( \frac{\kappa(l,
+      t)}{l^{2}} \frac{\partial}{\partial{l}} \right) - \lambda(l,
+  t)$. In this case $\theta$ would a collection of parameters which
+  would specify the analytic expressions for $\kappa(l,t)$,
+  $\lambda(l,t)$ and $Q(l,t)$.
+
 
 \subsection{Related Work}
 
@@ -180,7 +182,11 @@ Schrödinger's equation (\citep{doi:10.1137/120893975}, \citep{doi:10.1063/1.363
 
 \paragraph{Gaussian Processes}
 
-\citet{Särkkä2011} \citet{pmlr-v31-dondelinger13a}
+Gaussian Process (GP) models \citep{Rasmussen:2005:GPM:1162254} have a rich theory which has much overlapping with linear systems and deterministic and stochastic differential equations. 
+
+\citet{Skilling1992} presented one of the earliest works which focussed on calculating solutions of ordinary differential equations (ODE) systems with Gaussian Process methodolody, \citet{Graepel} applied it for solving linear partial differential equations with Dirichlet and Von Neumann boundary conditions.
+
+Interplay between linear operators and GP models applied to Bayesian filtering was investigated by \citet{Sarkka2011}. \citet{pmlr-v31-dondelinger13a} proposed an adaptive gradient matching technique to used Gaussian Process models for infering parameters of coupled ODE systems.
 
 \paragraph{Neural Networks} were also employed for solutions of boundary value problems in the works such as \citet{Lagaris}, \citet{Aarts2001} \&  \citet{TSOULOS20092385}. \citet{Baymani2011} used Feedforward networks for calculating solutions to the Stokes problem. These approaches generally revolved around decomposing the solution into two components, i.e. the first one satisfying the boundary conditions and the second one represented by the feedforward network.
 
