@@ -88,6 +88,26 @@ electrons and ions in complex lectromagnetic orbits. Since their discovery,
 the belts have been the subject of much research due to their complex behavior
 and damaging effects on spacecraft (\citep{GUBBY20021723}, \citep{WellingSatellite}).
 
+Radiation belt particles generally execute three types of periodic motion, 
+each with its own corresponding adiabatic invariant: 
+gyration about magnetic field lines, bounce along field lines, 
+and drift about the Earth. During active times, when conditions 
+change on time scales shorter than the periods of motion, 
+adiabaticity can be broken and particle motion can not be
+simply decomposed into the aforementioned components. When adaibatic motion 
+is violated, it can be represented diffusively along each component 
+via the \emph{Fokker-Plank} equation yielding a powerful picture of 
+radiation belt dynamics \citep{schulz2012particle}.
+
+The third invariant represents the total magnetic flux en- closed within 
+a full particle orbit. It is common to use a nor- malized form of this, the 
+so called Roederer $L^{*}$ \citep{Roederer1970}. It is analogous to radial 
+distance from the center of the Earth (in Earth radii) to the equatorial 
+crossing point of the bouncing particle. Diffusion in $L^{*}$ alone 
+(the other invariants shall be considered conserved) accounts for the
+capture and inward radial transport of radiation belt particles 
+(\cite{Roederer1970}, \citep{JGR:JGR4463}).
+
 \subsection{Plasma Diffusion}
 
 The radial diffusion system is a simplified one-dimensional version of
@@ -103,8 +123,8 @@ differential equation \ref{eq:raddiffusion} known as \emph{radial
 \end{equation}
 
 The \emph{phase space density}, $f$, is a function of the spatial
-coordinate $l$ which is also known as the \emph{Roederer} $L^*$ or
-\emph{L-shell} in magnetospheric physics \citep{Roederer1970}.
+coordinate $l$ which denotes the \emph{Roederer} $L^*$ or
+\emph{L-shell}.
 
 The key quantities in the system above are.
 
@@ -137,7 +157,7 @@ as the Kp index, a measured quantity which stands as a proxy for the
 global geomagnetic activity \cite{BartelsKp}.
 
 
-\subsection{Inverse Problems}\label{sec:inv}
+\section{Inverse Problems}\label{sec:inv}
 
 The \emph{inverse problem} can be stated as follows: given a set of
 noisy observations $y$ scattered in the space time domain, of a
