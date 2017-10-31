@@ -410,11 +410,27 @@ to the running sample statistics of the Markov Chain procedure.
 
 \section{Experiment}
 
-For the purposes of the experiment, the parameters of $\kappa$ and $Q$ are kept fixed while MCMC inference 
-is performed on the parameters of $\lambda$. The prior distributions chosen for the parameters 
+For the purposes of the experiment, the parameters of $\kappa$ fixed while MCMC inference 
+is performed on the parameters of $\lambda$ and $Q$. The prior distributions chosen for the parameters 
 are shown in table \ref{tab:prior}. The posterior distribution over the parameters of $\lambda$ is 
 sampled via adaptive Metropolis, the first 1500 samples are kept aside as the \emph{burn in} period
 of the Markov Chain.
+
+\begin{table}[t]
+  \caption{Parameters: Prior}
+  \label{tab:prior}
+  \centering
+  \begin{tabular}{lllll}
+    \toprule
+    \cmidrule{1-2}
+    Quantity     & $\alpha$     & $\beta$ & $\gamma$ & $b$ \\
+    \midrule
+    $\lambda$ & $Lognormal(0, 1)$ & $Gamma(1, 1)$ & N.A & $\mathcal{N}(0, 2)$ \\
+    $Q$ & $Lognormal(0, 2)$ & $Gamma(1, 1)$ & $Lognormal(0, 2)$ & $\mathcal{N}(0, 2)$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
 
 \subsection*{Data Generation}
 
@@ -441,6 +457,18 @@ Kp(t) &= \left\{\begin{matrix}
 \end{matrix}\right.
 \end{align}
 
+\begin{figure}[h]
+  \centering
+  \mbox{
+    \subfigure[Posterior Samples $\alpha$\label{subfig:alpha}]{\includegraphics[width=0.35\textwidth]{histogram_tau_alpha_posterior}}\quad
+    \subfigure[Posterior Samples $\beta$\label{subfig:beta}]{\includegraphics[width=0.35\textwidth]{histogram_tau_beta_posterior}}\quad
+    \subfigure[Posterior Samples $b$\label{subfig:b}]{\includegraphics[width=0.35\textwidth]{histogram_tau_b_posterior}}
+  }
+  \caption{Posterior distributions for parameters of $\lambda$, the red dotted line indicates ground truth for each parameter}
+  \label{fig:postlambda}
+\end{figure}
+
+
 Where $I_1$ is the modified Bessel function of the first kind with parameter 1. 
 The evolution of the Kp index \citep{BartelsKp} is assumed such that it mimics a geomagnetic storm event. 
 The radial diffusion solver is run for domain limits $l \in [1, 7], t \in [0, 5]$ with
@@ -451,20 +479,6 @@ uniformly such that 50 points lie in the interior of the domain and 20 points at
 are selected. These observations are then perturbed by Gaussian noise to yield
 the final observation set $\mathcal{D}$ which is fed to the surrogate model $\hat{f}(x)$.
 
-\begin{table}[t]
-  \caption{Parameters: Prior}
-  \label{tab:prior}
-  \centering
-  \begin{tabular}{lllll}
-    \toprule
-    \cmidrule{1-2}
-    Quantity     & $\alpha$     & $\beta$ & $\gamma$ & $b$ \\
-    \midrule
-    $\lambda$ & $Lognormal(0, 1)$ & $Gamma(1, 1)$ & N.A & $\mathcal{N}(0, 2)$ \\
-    $Q$ & $Lognormal(0, 2)$ & $Gamma(1, 1)$ & $Lognormal(0, 2)$ & $\mathcal{N}(0, 2)$ \\
-    \bottomrule
-  \end{tabular}
-\end{table}
 
 
 \subsection*{Results}
@@ -492,17 +506,29 @@ solutions for the phase space density $f$.
   \end{tabular}
 \end{table}
 
+\begin{figure}[h]
+  \centering
+  \mbox{
+    \subfigure[Posterior Samples $\alpha$\label{subfig:alpha2}]{\includegraphics[width=0.45\textwidth]{histogram_Q_alpha_posterior}}\quad
+    \subfigure[Posterior Samples $\beta$\label{subfig:beta2}]{\includegraphics[width=0.45\textwidth]{histogram_Q_beta_posterior}}
+    }
+  \caption{Posterior distributions for parameters of $Q$, the red dotted line indicates ground truth for each parameter}
+  \label{fig:postQ}
+\end{figure}
 
 \begin{figure}[h]
   \centering
   \mbox{
-    \subfigure[Posterior Samples $\alpha$\label{subfig:alpha}]{\includegraphics[width=0.35\textwidth]{histogram_alpha_posterior}}\quad
-    \subfigure[Posterior Samples $\beta$\label{subfig:beta}]{\includegraphics[width=0.35\textwidth]{histogram_beta_posterior}}\quad
-    \subfigure[Posterior Samples $b$\label{subfig:b}]{\includegraphics[width=0.35\textwidth]{histogram_b_posterior}}
+    \subfigure[Posterior Samples $\gamma$\label{subfig:gamma2}]{\includegraphics[width=0.45\textwidth]{histogram_Q_gamma_posterior}}\quad
+    \subfigure[Posterior Samples $b$\label{subfig:b2}]{\includegraphics[width=0.45\textwidth]{histogram_Q_b_posterior}}
   }
-  \caption{Posterior distributions for parameters of $\lambda$, the red dotted line indicates ground truth for each parameter}
-  \label{main figure label}
+  \caption{Posterior distributions for parameters of $Q$, the red dotted line indicates ground truth for each parameter}
+  \label{fig:postQ2}
 \end{figure}
+
+
+
+
 
 \subsubsection*{Acknowledgments}
 
