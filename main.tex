@@ -82,25 +82,25 @@
 
 \section{Introduction}
 
-The Earth's radiation belts (\citet{vanAllen}) are the regions of space near 
-the Earth ($2 \leq r < 8 R_{E}$), where the terrestrial magnetic field traps 
-electrons and ions in complex electromagnetic orbits. Since their discovery,
-the belts have been the subject of much research due to their complex behavior
-and damaging effects on spacecraft (\citep{GUBBY20021723}, \citep{WellingSatellite}).
+The Earth's radiation belts are the regions of space near 
+the Earth that extend between 2 and 8 Earth's radii, where the terrestrial magnetic field traps 
+electrons and ions in complex electromagnetic orbits  \citep{vanAllen}. Since their discovery,
+the belts have been the subject of intensive research due to their complex behavior
+and damaging effects on spacecraft \citep{GUBBY20021723, WellingSatellite, baker2002}.
 
 Radiation belt particles generally execute three types of periodic motion, 
 each with its own corresponding adiabatic invariant: 
 gyration about magnetic field lines, bounce along field lines, 
-and drift about the Earth. During active times, when conditions 
+and drift around the Earth. During active times, when conditions 
 change on time scales shorter than the periods of motion, 
 adiabaticity can be broken and particle motion can not be
-simply decomposed into the aforementioned components. When adaibatic motion 
-is violated, it can be represented diffusively along each component 
-via the \emph{Fokker-Plank} equation yielding a powerful picture of 
+simply decomposed into the aforementioned components. Particle motion 
+can then be represented diffusively along each component via the 
+\emph{Fokker-Planck} equation yielding a powerful picture of 
 radiation belt dynamics \citep{schulz2012particle}.
 
-The third invariant represents the total magnetic flux en- closed within 
-a full particle orbit. It is common to use a nor- malized form of this, the 
+The third invariant represents the total magnetic flux enclosed within 
+a full particle orbit. It is common to use a normalized form of this, the 
 so called Roederer $L^{*}$ \citep{Roederer1970}. It is analogous to radial 
 distance from the center of the Earth (in Earth radii) to the equatorial 
 crossing point of the bouncing particle. Diffusion in $L^{*}$ alone 
@@ -108,13 +108,28 @@ crossing point of the bouncing particle. Diffusion in $L^{*}$ alone
 capture and inward radial transport of radiation belt particles 
 (\cite{Roederer1970}, \citep{JGR:JGR4463}).
 
+One of the main difficulties of using a physics-based model for studying and 
+forecasting energetic electrons in the radiation belt is that the parameters 
+that characterize the Fokker-Planck equation, namely diffusion tensor and loss term,
+are not directly observable. Hence, their determination represents an inverse problem,
+which is generally difficult to solve and can often become ill-posed. 
+
+In this paper we propose an inference model which can learn from sparse
+data while taking into account prior knowledge of the system dynamics
+in the form of a linear partial differential equation. The method replaces
+the finite difference solver with a surrogate model which tries to fit
+the observations and the system dynamics. The surrogate is expressed as
+a basis function expansion whose coefficients are computed by formulating
+a \emph{Least Squares Support Vector Machine}(LSSVM) like optimization
+objective.
+
 \subsection{Plasma Diffusion}
 
 The radial diffusion system is a simplified one-dimensional version of
-the \emph{Fokker-Plank} equation. It tracks the time evolution of the
-\emph{phase space density} of particles, $f$ which is goverened by the
-differential equation \ref{eq:raddiffusion} known as \emph{radial
-  diffusion} \citep{JGRA:JGRA9345}.
+the \emph{Fokker-Planck} equation. It tracks the time evolution of the
+\emph{phase space density} of particles, $f$ which is governed by the
+differential equation (\ref{eq:raddiffusion}) known as \emph{radial
+  diffusion} in the radiation belt community\citep{JGRA:JGRA9345}.
 
 \begin{equation}\label{eq:raddiffusion}
   \frac{\partial{f}}{\partial{t}} = l^2 \frac{\partial}{\partial{l}}\left( \frac{\kappa(l,
@@ -122,7 +137,7 @@ differential equation \ref{eq:raddiffusion} known as \emph{radial
   t) f +  Q(l, t)
 \end{equation}
 
-The \emph{phase space density}, $f$, is a function of the spatial
+The \emph{phase space density} $f$ is a function of the spatial
 coordinate $l$ which denotes the \emph{Roederer} $L^*$ or
 \emph{L-shell}, and time $t$.
 
@@ -169,10 +184,10 @@ In this formalism $\mathcal{L}_{\theta}$ is a differential operator,
 $Q_{\theta}$ is a \emph{source term} and $\theta$ is a collection of parameters
 which specify the operator and the source term.
 
-In the radial diffusion system \ref{eq:raddiffusion}, $\mathcal{L}_{\theta} =
+In the radial diffusion system (\ref{eq:raddiffusion}), $\mathcal{L}_{\theta} =
 \frac{\partial}{\partial{t}} - l^2 \frac{\partial}{\partial{l}}\left( \frac{\kappa(l,
       t)}{l^{2}} \frac{\partial}{\partial{l}} \right) - \lambda(l,
-  t)$. In this case $\theta$ would a collection of parameters which
+  t)$. In this case $\theta$ would be a collection of parameters which
   would specify the analytic expressions for $\kappa(l,t)$,
   $\lambda(l,t)$ and $Q(l,t)$.
 
@@ -203,7 +218,7 @@ Radial basis functions have been applied for the mesh-free solutions of Poisson 
 (\citep{AMINATAEI20082887}, \citep{DUAN200866}, \citep{DUAN2006394} \& \citep{CNM:CNM419}),
 as well as the Poisson control problem \citet{Pearson2013}. Further applications of RBFs include 
 atmospheric flow \citep{Tillenius2015406}, convection-diffusion \citep{Safdari-Vaighani2015}, and 
-Schrödinger's equation (\citep{doi:10.1137/120893975}, \citep{doi:10.1063/1.3637863}). 
+Schrödinger's equation (\citep{doi:10.1137/120893975, doi:10.1063/1.3637863}). See ref. \citep{fornberg2015} for a recent textbook with geoscience applications.
 
 \paragraph{Gaussian Processes}
 
@@ -247,7 +262,7 @@ estimator for $f$ of the form $\hat{f}(x) = w^{T}\varphi(x) + b$,
 where $\varphi(.): \mathbb{R}^{2} \rightarrow \mathbb{R}^{d}$ is a $d$
 dimensional feature map and $b$ is a scalar intercept.
 
-Further let $\mathcal{C} ={(x^{o}_{i}, y_{i}): i = 1 \cdots n_{o}}$ be 
+Further let $\mathcal{C} ={(x^{c}_{i}, y_{i}): i = 1 \cdots n_{c}}$ be 
 a set of colocation points on which we aim to enforce radial diffusion
 dynamics.
 
@@ -421,14 +436,38 @@ Kp(t) &= \left\{\begin{matrix}
 \end{align}
 
 Where $I_1$ is the modified Bessel function of the first kind with parameter 1. 
-The evolution of the Kp index is assumed such that it mimics a geomagnetic storm event. 
+The evolution of the Kp index \citep{BartelsKp} is assumed such that it mimics a geomagnetic storm event. 
 The radial diffusion solver is run for domain limits $l \in [1, 7], t \in [0, 5]$ with
 200 bins in the spatial and 50 bins in the temporal domains respectively.
 
 After the approximate solution profiles of $f$ are generated, the points are sub-sampled
-uniformly such that 50 points in the bulk and 20 points at the initial time step (t = 0)
-are selected. These observations are then perturbed slightly by Gaussian noise to yield
+uniformly such that 50 points lie in the interior of the domain and 20 points at the initial time step (t = 0)
+are selected. These observations are then perturbed by Gaussian noise to yield
 the final observation set $\mathcal{D}$ which is fed to the surrogate model $\hat{f}(x)$.
+
+\begin{table}[t]
+  \caption{Parameters: Prior}
+  \label{tab:prior}
+  \centering
+  \begin{tabular}{llll}
+    \toprule
+    \cmidrule{1-2}
+    Quantity     & $\alpha$     & $\beta$ & $b$ \\
+    \midrule
+    $\lambda$ & $Lognormal(0, 1)$ & $Gamma(1, 1)$ & $\mathcal{N}(0, 2)$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+
+\subsection*{Results}
+
+The posterior samples generated for parameters $\alpha$, $\beta$ and $b$ are shown
+in figures \ref{fig:alpha}, \ref{fig:beta} and \ref{fig:b} respectively. We see that
+the marginal posterior distributions of each parameter have high probability 
+density near the ground truth, and that they are heavy tailed in the case of $\alpha$, 
+this is because there are often large regions of the parameter space which produce similar
+solutions for the phase space density $f$. 
 
 \begin{table}[t]
   \caption{Parameters: Ground Truth}
@@ -442,29 +481,6 @@ the final observation set $\mathcal{D}$ which is fed to the surrogate model $\ha
     $Q$ & $1$  & $0.5$ & $0.05$  & $0.45$     \\
     $\kappa$  & $4.731 \times 10^{-10}$ & $10$  & $0$ & $0.506$ \\
     $\lambda$ & $0.3678$ & $0.5$  & $0$ & $-0.2$ \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-\subsection*{Results}
-
-The posterior samples generated for parameters $\alpha$, $\beta$ and $b$ are shown
-in figures \ref{fig:alpha}, \ref{fig:beta} and \ref{fig:b} respectively. We see that
-the marginal posterior distributions of each parameter have high probability 
-density near the ground truth, and that they are heavy tailed in the case of $\alpha$, 
-this is because there are often large regions of the parameter space which produce similar
-solutions for the phase space density $f$. 
-
-\begin{table}[t]
-  \caption{Parameters: Prior}
-  \label{tab:prior}
-  \centering
-  \begin{tabular}{llll}
-    \toprule
-    \cmidrule{1-2}
-    Quantity     & $\alpha$     & $\beta$ & $b$ \\
-    \midrule
-    $\lambda$ & $Lognormal(0, 1)$ & $Gamma(1, 1)$ & $\mathcal{N}(0, 2)$ \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -493,7 +509,7 @@ solutions for the phase space density $f$.
 
 \subsubsection*{Acknowledgments}
 
-The authors would like to acknowledge travel grant.
+The authors would like to acknowledge INRIA associate tram grant EA-544.
 
 \medskip
 
