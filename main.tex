@@ -352,7 +352,7 @@ at a point $x = (l,t)$.
 \hat{f}(x;\theta) = \sum_{k = 1}^{n_{o}}{\alpha_{k}\varphi(x)^{T}\varphi(x^{o}_{k}) + \sum_{k = 1}^{n_{c}}}{\beta_{k} \varphi(x)^{T} \psi_{\theta}(x^{c}_{k})} + b
 \end{equation}
 
-\subsection*{Choice of Basis}
+\subsubsection*{Choice of Basis}
 
 There exist several choices regarding the basis $\varphi(.)$, they are but not limited to 
 orthogonal polynomials, Fourier series, radial basis functions etc. 
@@ -370,7 +370,7 @@ node points. The value of the exponent $s$ in equation \ref{eq:basis} should be
 a positive value between $0$ and $1$, we have seen that setting $s = 0.75$ works well
 in practice.
 
-\subsubsection*{Quantifying Observation Likelihood}
+\subsection{Quantifying Observation Likelihood}
 
 We assume a multivariate Gaussian distribution for calculating the likelihood of 
 the observations conditioned on the system parameters $\theta$. 
