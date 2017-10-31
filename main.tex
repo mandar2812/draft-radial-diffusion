@@ -378,7 +378,7 @@ gives the modeler the ability to vary the behavior of the surrogate model. In th
 limiting case of $\gamma_c$ tending to zero, the model behaves as if the PDE dynamics
 is enforced as a hard constraint. This case is equivalent to the following formulation.
 
-\begin{align}\label{eq:surrogate}
+\begin{align}\label{eq:surrogate2}
    min_{w,e} \ \mathcal{J}(w,e,\epsilon;\theta) &= 
    \frac{1}{2} w^{T}w + \frac{1}{2\gamma_{o}} \sum_{k = 1}^{n_{o}}{e^{2}_{k}} \\
   & s.t \nonumber \\
@@ -386,6 +386,10 @@ is enforced as a hard constraint. This case is equivalent to the following formu
   q_{i} & = w^{T}\psi_{\theta}(x^{c}_{i}), \ \ i = 1 \cdots n_{c}
 \end{align}
 
+Although choosing $\gamma_c = 0$ is an appropriate choice if one wishes
+to enforce the physical dynamics as a constraint, it can possibly lead to numerical
+instabilities in inverting system \ref{eq:solution} and hence choosing a small
+value like $\gamma_c = 10^{-8}$ works better in practice.
 
 
 \subsection{Quantifying Observation Likelihood}
