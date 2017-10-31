@@ -112,7 +112,7 @@ One of the main difficulties of using a physics-based model for studying and
 forecasting energetic electrons in the radiation belt is that the parameters 
 that characterize the Fokker-Planck equation, namely diffusion tensor and loss term,
 are not directly observable. Hence, their determination represents an inverse problem,
-which is generally difficult to solve and can often become ill-posed. 
+which is generally difficult to solve and can often become ill-posed.
 
 In this paper we propose an inference model which can learn from sparse
 data while taking into account prior knowledge of the system dynamics
@@ -491,9 +491,12 @@ The posterior inferred for parameters of the particle loss rate $lambda$ are sho
 particle injection $Q$.
 
 We see that the marginal posterior distributions of each parameter have high probability 
-density near the ground truth, and that they are heavy tailed in the case of $\alpha$, 
-this is because there are often large regions of the parameter space which produce similar
-solutions for the phase space density $f$. 
+density near the ground truth, and that they are heavy tailed because there are often large 
+regions of the parameter space which produce similar solutions for the phase space density $f$. 
+
+The strength of the proposed method is the ability to quantify the uncertainty in diffusion parameters from a sparse
+set of observations. Due to the formulation of the surrogate as a dual optimization problem, it allows the inference
+to scale well with respect to high dimensional basis function expansions.
 
 \begin{table}[t]
   \caption{Parameters: Ground Truth}
