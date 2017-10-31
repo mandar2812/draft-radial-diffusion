@@ -22,8 +22,9 @@
 \usepackage{nicefrac}       % compact symbols for 1/2, etc.
 \usepackage{microtype}      % microtypography
 \usepackage{graphicx}
+\usepackage{subfigure}
 \usepackage{caption}
-\usepackage{subcaption}
+%\usepackage{subcaption}
 \bibliographystyle{unsrtnat}
 
 \title{Bayesian Inference of Plasma Diffusion Parameters: An LSSVM based approach}
@@ -468,7 +469,7 @@ the final observation set $\mathcal{D}$ which is fed to the surrogate model $\ha
 \subsection*{Results}
 
 The posterior samples generated for parameters $\alpha$, $\beta$ and $b$ are shown
-in figures \ref{fig:alpha}, \ref{fig:beta} and \ref{fig:b} respectively. We see that
+in figures \ref{subfig:alpha}, \ref{subfig:beta} and \ref{subfig:b} respectively. We see that
 the marginal posterior distributions of each parameter have high probability 
 density near the ground truth, and that they are heavy tailed in the case of $\alpha$, 
 this is because there are often large regions of the parameter space which produce similar
@@ -491,25 +492,15 @@ solutions for the phase space density $f$.
 \end{table}
 
 
-\begin{figure}[h] 
-  \centering
-  \includegraphics[width=0.4\textwidth]{histogram_alpha_posterior}
-  \caption{Posterior Samples $\alpha$}
-  \label{fig:alpha}
-\end{figure}
-
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.4\textwidth]{histogram_beta_posterior}
-  \caption{Posterior Samples $\beta$}
-  \label{fig:beta}
-\end{figure}
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.4\textwidth]{histogram_b_posterior}
-  \caption{Posterior Samples $b$}
-  \label{fig:b}
+  \mbox{
+    \subfigure[Posterior Samples $\alpha$\label{subfig:alpha}]{\includegraphics[width=0.35\textwidth]{histogram_alpha_posterior}}\quad
+    \subfigure[Posterior Samples $\beta$\label{subfig:beta}]{\includegraphics[width=0.35\textwidth]{histogram_beta_posterior}}\quad
+    \subfigure[Posterior Samples $b$\label{subfig:b}]{\includegraphics[width=0.35\textwidth]{histogram_b_posterior}}
+  }
+  \caption{Posterior distributions for parameters of $\lambda$, the red dotted line indicates ground truth for each parameter}
+  \label{main figure label}
 \end{figure}
 
 \subsubsection*{Acknowledgments}
