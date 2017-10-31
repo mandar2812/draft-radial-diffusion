@@ -268,9 +268,11 @@ estimator for $f$ of the form $\hat{f}(x) = w^{T}\varphi(x) + b$,
 where $\varphi(.): \mathbb{R}^{2} \rightarrow \mathbb{R}^{d}$ is a $d$
 dimensional feature map and $b$ is a scalar intercept.
 
-Further let $\mathcal{C} ={(x^{c}_{i}, y_{i}): i = 1 \cdots n_{c}}$ be 
+Further let $\mathcal{C} ={(x^{c}_{i}, q_{i}): i = 1 \cdots n_{c}}$ be 
 a set of colocation points on which we aim to enforce radial diffusion
-dynamics.
+dynamics. The values $q_{i}$ represent the particle injection rate $Q$ at $x^c$ and 
+are calculated each time the parameters of Q are sampled, by evaluating the expression 
+$Q(l,t) = (\alpha_{Q}l^{\beta_{Q}} + \gamma_{Q})10^{b_{Q}Kp(t)}$.
 
 We exploit the linearity of the differential operator
 $\mathcal{L}_{\theta}$ and note that $\mathcal{L}_{\theta} [\hat{f}(x)]
@@ -483,9 +485,12 @@ the final observation set $\mathcal{D}$ which is fed to the surrogate model $\ha
 
 \subsection*{Results}
 
-The posterior samples generated for parameters $\alpha$, $\beta$ and $b$ are shown
-in figures \ref{subfig:alpha}, \ref{subfig:beta} and \ref{subfig:b} respectively. We see that
-the marginal posterior distributions of each parameter have high probability 
+The posterior inferred for parameters of the particle loss rate $lambda$ are shown in
+\ref{subfig:alpha}, \ref{subfig:beta} and \ref{subfig:b} respectively. Figures \ref{subfig:alpha}, 
+\ref{subfig:beta}, \ref{subfig:gamma2} and \ref{subfig:b} show the same for parameters of the
+particle injection $Q$.
+
+We see that the marginal posterior distributions of each parameter have high probability 
 density near the ground truth, and that they are heavy tailed in the case of $\alpha$, 
 this is because there are often large regions of the parameter space which produce similar
 solutions for the phase space density $f$. 
