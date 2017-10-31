@@ -455,12 +455,13 @@ the final observation set $\mathcal{D}$ which is fed to the surrogate model $\ha
   \caption{Parameters: Prior}
   \label{tab:prior}
   \centering
-  \begin{tabular}{llll}
+  \begin{tabular}{lllll}
     \toprule
     \cmidrule{1-2}
-    Quantity     & $\alpha$     & $\beta$ & $b$ \\
+    Quantity     & $\alpha$     & $\beta$ & $\gamma$ & $b$ \\
     \midrule
-    $\lambda$ & $Lognormal(0, 1)$ & $Gamma(1, 1)$ & $\mathcal{N}(0, 2)$ \\
+    $\lambda$ & $Lognormal(0, 1)$ & $Gamma(1, 1)$ & N.A & $\mathcal{N}(0, 2)$ \\
+    $Q$ & $Lognormal(0, 2)$ & $Gamma(1, 1)$ & $Lognormal(0, 2)$ & $\mathcal{N}(0, 2)$ \\
     \bottomrule
   \end{tabular}
 \end{table}
