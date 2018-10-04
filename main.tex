@@ -192,7 +192,7 @@ which specify the operator and the source term.
 
 In the radial diffusion system (\ref{eq:raddiffusion}), $\mathcal{L}_{\theta} =
 \frac{\partial}{\partial{t}} - l^2 \frac{\partial}{\partial{l}}\left( \frac{\kappa(l,
-      t)}{l^{2}} \frac{\partial}{\partial{l}} \right) - \lambda(l,
+      t)}{l^{2}} \frac{\partial}{\partial{l}} \right) + \lambda(l,
   t)$. In this case $\theta$ would be a collection of parameters which
   would specify the analytic expressions for $\kappa(l,t)$,
   $\lambda(l,t)$ and $Q(l,t)$.
@@ -307,8 +307,8 @@ In order to solve this system one must construct its
       \mathfrak{L}(w,e,\epsilon, \alpha_{1 \cdots k}, \beta_{1 \cdots k}; \theta; \gamma_{o}; \gamma_{c}) &= 
       \frac{1}{2} w^{T}w + \frac{1}{2\gamma_{o}} \sum_{k = 1}^{n_{o}}{e^{2}_{k}} +
       \frac{1}{2\gamma_{c}} \sum_{k = 1}^{n_{c}}{\epsilon^{2}_{k}} \\
-      & + \sum_{k = 1}^{n_{o}}{\alpha_{k}(y_{k} - w^{T}\varphi(x^{o}_{k}) + b + e_{k})} \\
-      & + \sum_{k = 1}^{n_{c}}{\beta_{k}(q_{j} - w^{T}\psi_{\theta}(x^{c}_{j}) + \epsilon_{j})} 
+      & + \sum_{k = 1}^{n_{o}}{\alpha_{k}(y_{k} - w^{T}\varphi(x^{o}_{k}) - b - e_{k})} \\
+      & + \sum_{k = 1}^{n_{c}}{\beta_{k}(q_{j} - w^{T}\psi_{\theta}(x^{c}_{j}) - \epsilon_{j})} 
 \end{align*}
 
 Given fixed values for $\gamma_{o}$, $\gamma_{c}$ and PDE parameters
@@ -565,7 +565,7 @@ to scale well with respect to high dimensional basis function expansions. The me
 
 \subsubsection*{Acknowledgments}
 
-The authors would like to acknowledge INRIA associate tram grant EA-544 for enabling scientific collaboration.
+The authors would like to acknowledge INRIA associate team grant EA-544 for enabling scientific collaboration.
 
 \medskip
 
